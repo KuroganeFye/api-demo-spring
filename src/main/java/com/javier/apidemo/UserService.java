@@ -19,6 +19,16 @@ public class UserService
 
     public User createUser(User user) 
     {
+        
+        if (user.getAge() < 0)
+        {
+            throw new InvalidUserException("Age cannot be negative");
+        }
+        else if (user.getName() == null || user.getName().isEmpty())
+        {
+            throw new InvalidUserException("Name cannot be empty");
+        }
+
         user.setId(nextId);
         nextId++;
         users.add(user);
