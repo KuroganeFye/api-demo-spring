@@ -10,6 +10,7 @@ public class UserService
 {
 
     private List<User> users = new ArrayList<>();
+    private int nextId = 1;
 
     public List<User> getUsers() 
     {
@@ -18,7 +19,22 @@ public class UserService
 
     public User createUser(User user) 
     {
+        user.setId(nextId);
+        nextId++;
         users.add(user);
         return user;
+    }
+
+    public User getUserById(Integer id)
+    {
+        for (User user : users)
+        {
+            if (user.getId().equals(id))
+            {
+                return user;
+            }
+        }
+
+        throw new UserNotFoundException(id);
     }
 }
