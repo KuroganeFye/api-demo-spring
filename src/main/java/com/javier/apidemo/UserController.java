@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.HttpStatus;
+
 import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 @RequestMapping("/api")
@@ -37,5 +42,18 @@ public class UserController
         // Here you can perform any necessary operations with the user object, such as saving it to a database or performing validation.
         // For demonstration purposes, we'll just return the received user object.
         return userService.createUser(user);
+    }
+
+    @PutMapping("/users/{id}")
+    public User updateUser(@PathVariable Integer id, @RequestBody User user)
+    {
+        return userService.updateUser(id, user);
+    }
+
+    @DeleteMapping("/users/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)  // Esto manda un código 204 (sin contenido), es la mejor práctica al borrar
+    public void deleteUser(@PathVariable Integer id)
+    {
+        userService.deleteUser(id);
     }
 }
